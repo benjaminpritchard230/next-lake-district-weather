@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Cabin", sans-serif;
+  background-image: url(../public/background-1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: inherit;
+  @media (max-width: 768px) {
+    overflow: auto;
+  }
+  @media (min-width: 768px) {
+    overflow: auto;
+  }
+  @media (min-width: 1280px) {
+    overflow: hidden;
+  }
+  @media (min-width: 1920px) {
+    overflow: hidden;
+  }
+}
