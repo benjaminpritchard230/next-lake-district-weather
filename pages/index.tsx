@@ -1,8 +1,17 @@
 import styles from "@/styles/HomePage.module.scss";
+import { IRoot } from "@/types/weather/types";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
-export default function Home() {
+import React from "react";
+
+type Props = {
+  data: IRoot;
+};
+
+const HomePage = ({ data }: Props) => {
+  console.log(data);
   return (
     <div className="body">
       <div className={styles["grid"]}>
@@ -15,7 +24,7 @@ export default function Home() {
         </div>
         <div className={styles["grid__item--1"]}>
           <p>Monday</p>
-          <p>15c</p>
+          <p>{data.current.temp_c}c</p>
           <p>Raining</p>
         </div>
         <div className={styles["grid__item--2"]}>
@@ -79,4 +88,21 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default HomePage;
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const key = process.env.DB_KEY;
+
+  const res = await fetch(
+    `http://api.weatherapi.com/v1/current.json?key=${key}=wa59qf&aqi=no`
+  );
+  const data: IRoot = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
