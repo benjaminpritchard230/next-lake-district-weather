@@ -1,9 +1,9 @@
+import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
 import { IRoot } from "@/types/weather/types";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
-
 import React from "react";
 
 type Props = {
@@ -24,7 +24,7 @@ const HomePage = ({ data }: Props) => {
         </div>
         <div className={styles["grid__item--1"]}>
           <p>Monday</p>
-          <p>{data.current.temp_c}c</p>
+          {/* <p>{data.current.temp_c}c</p> */}
           <p>Raining</p>
         </div>
         <div className={styles["grid__item--2"]}>
@@ -59,28 +59,53 @@ const HomePage = ({ data }: Props) => {
         </div>
         <div className={styles["grid__item--8"]}>
           <ul className={styles["map"]}>
-            <li title="Kendal" style={{ top: "81%", right: "22.5%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Kendal"
+              style={{ top: "81%", right: "22.5%" }}
+            >
               1
             </li>
-            <li title="Windermere" style={{ top: "25.5%", left: "43.5%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Windermere"
+              style={{ top: "25.5%", left: "43.5%" }}
+            >
               2
             </li>
-            <li title="Keswick" style={{ top: "12.5%", left: "73%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Keswick"
+              style={{ top: "12.5%", left: "73%" }}
+            >
               3
             </li>
-            <li title="Windermere" style={{ top: "70%", left: "61%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Windermere"
+              style={{ top: "70%", left: "61%" }}
+            >
               4
             </li>
             <li
+              className={styles["map__marker"]}
               title="Broughton in Furness"
               style={{ top: " 90%", left: "37.5%" }}
             >
               5
             </li>
-            <li title="Ennerdale" style={{ top: "42.5%", left: "26.5%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Ennerdale"
+              style={{ top: "42.5%", left: "26.5%" }}
+            >
               6
             </li>
-            <li title="Thirlmere" style={{ top: "44%", left: "50%" }}>
+            <li
+              className={styles["map__marker"]}
+              title="Thirlmere"
+              style={{ top: "44%", left: "50%" }}
+            >
               7
             </li>
           </ul>
@@ -94,9 +119,12 @@ export default HomePage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
+  const latitude = coordinates.Keswick.latitude;
+  const longitude = coordinates.Keswick.longitude;
 
   const res = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=${key}=wa59qf&aqi=no`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}
+    `
   );
   const data: IRoot = await res.json();
 
