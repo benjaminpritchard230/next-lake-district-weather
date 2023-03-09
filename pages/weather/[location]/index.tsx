@@ -1,16 +1,17 @@
 import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
 import { Root } from "@/types/weather/types";
-import { GetStaticProps } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import React from "react";
 
 type Props = {
   data: Root;
 };
 
-const HomePage = ({ data }: Props) => {
+const Location = ({ data }: Props) => {
+  const router = useRouter();
+  const location = router.query.location;
   console.log(data);
   return (
     <div className="body">
@@ -25,7 +26,7 @@ const HomePage = ({ data }: Props) => {
         <div className={styles["grid__item--1"]}>
           <p>Monday</p>
           {/* <p>{data.current.temp_c}c</p> */}
-          <p>Raining</p>
+          <p>{data.weather[0].main}</p>
         </div>
         <div className={styles["grid__item--2"]}>
           <p>Tuesday</p>
@@ -115,10 +116,32 @@ const HomePage = ({ data }: Props) => {
   );
 };
 
-export default HomePage;
+export default Location;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const key = process.env.DB_KEY;
+
+  const paths = [
+    "keswick",
+    "kendal",
+    "ennerdale",
+    "thirlmere",
+    "broughton",
+    "windermere",
+    "penrith",
+  ].map((location) => ({
+    params: { location: `${location}` },
+  }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
+  const { params } = context;
+  const location = params!.location;
   const latitude = coordinates.keswick.latitude;
   const longitude = coordinates.keswick.longitude;
 
