@@ -119,11 +119,11 @@ export default HomePage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
-  const latitude = coordinates.keswick.latitude;
-  const longitude = coordinates.keswick.longitude;
+  const lat = coordinates.keswick.latitude;
+  const lon = coordinates.keswick.longitude;
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
+    `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
   );
   const data: Root = await res.json();
 

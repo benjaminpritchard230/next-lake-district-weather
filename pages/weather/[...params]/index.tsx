@@ -1,6 +1,6 @@
 import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
-import { Root } from "@/types/weather/types";
+import { Root } from "@/types/forecast/types";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,7 +11,8 @@ type Props = {
 
 const Location = ({ data }: Props) => {
   const router = useRouter();
-  const location = router.query.location;
+  // const location = router.query.location;
+  console.log(router);
   console.log(data);
   return (
     <div className="body">
@@ -24,39 +25,39 @@ const Location = ({ data }: Props) => {
           </span>
         </div>
         <div className={styles["grid__item--1"]}>
-          <p>Monday</p>
-          {/* <p>{data.current.temp_c}c</p> */}
-          <p>{data.weather[0].main}</p>
+          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
+          <p>{data.list[0].main.temp}</p>
+          <p>{data.list[0].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--2"]}>
-          <p>Tuesday</p>
-          <p>10c</p>
-          <p>Clear</p>
+          <p>{new Date(data.list[7].dt_txt).getDay()}</p>
+          <p>{data.list[7].main.temp}</p>
+          <p>{data.list[7].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--3"]}>
-          <p>Wednesday</p>
-          <p>12c</p>
-          <p>Light rain</p>
+          <p>{new Date(data.list[14].dt_txt).getDay()}</p>
+          <p>{data.list[14].main.temp}</p>
+          <p>{data.list[14].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--4"]}>
-          <p>Thursday</p>
-          <p>11c</p>
-          <p>Sunny</p>
+          <p>{new Date(data.list[21].dt_txt).getDay()}</p>
+          <p>{data.list[21].main.temp}</p>
+          <p>{data.list[21].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--5"]}>
-          <p>Friday</p>
-          <p>9c</p>
-          <p>Raining</p>
+          <p>{new Date(data.list[28].dt_txt).getDay()}</p>
+          <p>{data.list[28].main.temp}</p>
+          <p>{data.list[28].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--6"]}>
-          <p>Saturday</p>
-          <p>15c</p>
-          <p>Raining</p>
+          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
+          <p>{data.list[0].main.temp}</p>
+          <p>{data.list[0].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--7"]}>
-          <p>Sunday</p>
-          <p>11c</p>
-          <p>Heavy rain</p>
+          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
+          <p>{data.list[0].main.temp}</p>
+          <p>{data.list[0].weather[0].description}</p>
         </div>
         <div className={styles["grid__item--8"]}>
           <ul className={styles["map"]}>
@@ -121,17 +122,18 @@ export default Location;
 export const getStaticPaths: GetStaticPaths = async () => {
   const key = process.env.DB_KEY;
 
-  const paths = [
-    "keswick",
-    "kendal",
-    "ennerdale",
-    "thirlmere",
-    "broughton",
-    "windermere",
-    "penrith",
-  ].map((location) => ({
-    params: { location: `${location}` },
-  }));
+  // const paths = [
+  //   "keswick",
+  //   "kendal",
+  //   "ennerdale",
+  //   "thirlmere",
+  //   "broughton",
+  //   "windermere",
+  //   "penrith",
+  // ].map((location) => ({
+  //   params: { location: `${location}` },
+  // }));
+  const paths: any = [];
   return {
     paths,
     fallback: "blocking",
@@ -141,12 +143,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
   const { params } = context;
-  const location = params!.location;
-  const latitude = coordinates.keswick.latitude;
-  const longitude = coordinates.keswick.longitude;
+  console.log(params, "params");
+  const lon = params!.params![0];
+  const lat = params!.params![1];
+  console.log(
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
+  );
 
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
   );
   const data: Root = await res.json();
 
