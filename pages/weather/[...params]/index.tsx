@@ -2,6 +2,7 @@ import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
 import { Root } from "@/types/forecast/types";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -14,6 +15,40 @@ const Location = ({ data }: Props) => {
   // const location = router.query.location;
   console.log(router);
   console.log(data);
+
+  const getCelcius = (temp: number) => {
+    return `${Math.round(temp - 273.15)}°C`;
+  };
+
+  const getFahrenheit = (temp: number) => {
+    return `${Math.round(temp - 459.67)}°C`;
+  };
+
+  const getDay = (date: string) => {
+    switch (new Date(date).getDay()) {
+      case 0:
+        return "Sunday";
+        break;
+      case 1:
+        return "Monday";
+        break;
+      case 2:
+        return "Tuesday";
+        break;
+      case 3:
+        return "Wednesday";
+        break;
+      case 4:
+        return "Thursday";
+        break;
+      case 5:
+        return "Friday";
+        break;
+      case 6:
+        return "Saturday";
+        break;
+    }
+  };
   return (
     <div className="body">
       <div className={styles["grid"]}>
@@ -24,92 +59,59 @@ const Location = ({ data }: Props) => {
             <button className={styles["header__button--active"]}>°F</button>
           </span>
         </div>
+        {/* Current weather */}
         <div className={styles["grid__item--1"]}>
-          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
-          <p>{data.list[0].main.temp}</p>
+          <p>{getDay(data.list[0].dt_txt)}</p>
+          <p>{getCelcius(data.list[0].main.temp)}</p>
           <p>{data.list[0].weather[0].description}</p>
         </div>
+        {/* Day 1 */}
         <div className={styles["grid__item--2"]}>
-          <p>{new Date(data.list[7].dt_txt).getDay()}</p>
-          <p>{data.list[7].main.temp}</p>
-          <p>{data.list[7].weather[0].description}</p>
+          <p>{getDay(data.list[8].dt_txt)}</p>
+          <p>{getCelcius(data.list[8].main.temp)}</p>
+
+          <p>{data.list[8].weather[0].description}</p>
         </div>
+        {/* Day 2 */}
         <div className={styles["grid__item--3"]}>
-          <p>{new Date(data.list[14].dt_txt).getDay()}</p>
-          <p>{data.list[14].main.temp}</p>
-          <p>{data.list[14].weather[0].description}</p>
+          <p>{getDay(data.list[16].dt_txt)}</p>
+          <p>{getCelcius(data.list[16].main.temp)}</p>
+          <p>{data.list[16].weather[0].description}</p>
         </div>
+        {/* Day 3 */}
         <div className={styles["grid__item--4"]}>
-          <p>{new Date(data.list[21].dt_txt).getDay()}</p>
-          <p>{data.list[21].main.temp}</p>
-          <p>{data.list[21].weather[0].description}</p>
+          <p>{getDay(data.list[24].dt_txt)}</p>
+          <p>{getCelcius(data.list[24].main.temp)}</p>
+          <p>{data.list[24].weather[0].description}</p>
         </div>
+        {/* Day 4 */}
         <div className={styles["grid__item--5"]}>
-          <p>{new Date(data.list[28].dt_txt).getDay()}</p>
-          <p>{data.list[28].main.temp}</p>
-          <p>{data.list[28].weather[0].description}</p>
+          <p>{getDay(data.list[32].dt_txt)}</p>
+          <p>{getCelcius(data.list[32].main.temp)}</p>
+          <p>{data.list[32].weather[0].description}</p>
         </div>
-        <div className={styles["grid__item--6"]}>
-          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
-          <p>{data.list[0].main.temp}</p>
-          <p>{data.list[0].weather[0].description}</p>
-        </div>
-        <div className={styles["grid__item--7"]}>
-          <p>{new Date(data.list[0].dt_txt).getDay()}</p>
-          <p>{data.list[0].main.temp}</p>
-          <p>{data.list[0].weather[0].description}</p>
-        </div>
+        {/* Day 5 */}
+        <div className={styles["grid__item--6"]}>must go</div>
+        <div className={styles["grid__item--7"]}>must go</div>
         <div className={styles["grid__item--8"]}>
           <ul className={styles["map"]}>
-            <li
-              className={styles["map__marker"]}
-              title="Kendal"
-              style={{ top: "81%", right: "22.5%" }}
-            >
-              1
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Windermere"
-              style={{ top: "25.5%", left: "43.5%" }}
-            >
-              2
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Keswick"
-              style={{ top: "12.5%", left: "73%" }}
-            >
-              3
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Windermere"
-              style={{ top: "70%", left: "61%" }}
-            >
-              4
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Broughton in Furness"
-              style={{ top: " 90%", left: "37.5%" }}
-            >
-              5
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Ennerdale"
-              style={{ top: "42.5%", left: "26.5%" }}
-            >
-              6
-            </li>
-            <li
-              className={styles["map__marker"]}
-              title="Thirlmere"
-              style={{ top: "44%", left: "50%" }}
-            >
-              7
-            </li>
+            {coordinates.map((location, index) => {
+              return (
+                <>
+                  <Link
+                    href={`/weather/${location.latitude}/${location.longitude}`}
+                  >
+                    <li
+                      className={styles["map__marker"]}
+                      title={location.name}
+                      style={{ top: location.top, left: location.left }}
+                    >
+                      {`${index + 1}`}
+                    </li>
+                  </Link>
+                </>
+              );
+            })}
           </ul>
         </div>
       </div>

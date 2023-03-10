@@ -1,9 +1,51 @@
-export const coordinates = {
-  keswick: { longitude: "54.6013", latitude: "3.1347" },
-  kendal: { longitude: "54.3280", latitude: "3.7463" },
-  ennerdale: { longitude: "54.5211", latitude: "3.3786" },
-  thirlmere: { longitude: "54.3565", latitude: "3.0642" },
-  broughton: { longitude: "54.2777", latitude: "3.2113" },
-  windermere: { longitude: "54.3807", latitude: "2.9068" },
-  penrith: { longitude: "54.6641", latitude: "2.7527" },
-};
+export const coordinates = [
+  {
+    name: "Penrith",
+    longitude: "54.6641",
+    latitude: "2.7527",
+    top: "12.5%",
+    left: "73%",
+  },
+  {
+    name: "Kendal",
+    longitude: "54.3280",
+    latitude: "2.7463",
+    top: "80%",
+    left: "73.5%",
+  },
+  {
+    name: "Ennerdale",
+    longitude: "54.5226",
+    latitude: "3.3817",
+    top: "42.5%",
+    left: "26.5%",
+  },
+  {
+    name: "Thirlmere",
+    longitude: "54.5365",
+    latitude: "3.0642",
+    top: "44%",
+    left: "50%",
+  },
+  {
+    name: "Broughton",
+    longitude: "54.2777",
+    latitude: "3.2113",
+    top: " 90%",
+    left: "37.5%",
+  },
+  {
+    name: "Keswick",
+    longitude: "54.6013",
+    latitude: "3.1347",
+    top: "25.5%",
+    left: "43.5%",
+  },
+  {
+    name: "Windermere",
+    longitude: "54.3807",
+    latitude: "2.9068",
+    top: "70%",
+    left: "61.5%",
+  },
+];

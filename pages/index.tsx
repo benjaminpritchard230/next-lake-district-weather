@@ -1,6 +1,6 @@
 import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
-import { Root } from "@/types/weather/types";
+import { Root } from "@/types/forecast/types";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -119,11 +119,9 @@ export default HomePage;
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
-  const lat = coordinates.keswick.latitude;
-  const lon = coordinates.keswick.longitude;
 
   const res = await fetch(
-    `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
+    `https://api.openweathermap.org/data/2.5/forecast?lat=23&lon=23&appid=${key}`
   );
   const data: Root = await res.json();
 
