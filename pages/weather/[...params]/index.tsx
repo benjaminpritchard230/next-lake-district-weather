@@ -3,6 +3,7 @@ import { coordinates } from "@/coordinates";
 import styles from "@/styles/HomePage.module.scss";
 import { Root } from "@/types/forecast/types";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -122,9 +123,12 @@ const Location = ({ data }: Props) => {
             {getWind(data.list[0].wind.speed)}/
             {getWindDirection(data.list[0].wind.deg)}
           </p>
-          <img
+          <Image
             src={`https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`}
             alt={data.list[0].weather[0].description}
+            title={data.list[0].weather[0].description}
+            width={100}
+            height={100}
           />
         </div>
         {/* Day 1 8 */}
@@ -135,9 +139,12 @@ const Location = ({ data }: Props) => {
             {getWind(data.list[8].wind.speed)}/
             {getWindDirection(data.list[8].wind.deg)}
           </p>
-          <img
+          <Image
             src={`https://openweathermap.org/img/wn/${data.list[8].weather[0].icon}@2x.png`}
             alt={data.list[8].weather[0].description}
+            title={data.list[8].weather[0].description}
+            width={100}
+            height={100}
           />
         </div>
         {/* Day 2 16*/}
@@ -148,9 +155,12 @@ const Location = ({ data }: Props) => {
             {getWind(data.list[16].wind.speed)}/
             {getWindDirection(data.list[16].wind.deg)}
           </p>
-          <img
+          <Image
             src={`https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`}
             alt={data.list[16].weather[0].description}
+            title={data.list[16].weather[0].description}
+            width={100}
+            height={100}
           />
         </div>
         {/* Day 3 24 */}
@@ -161,9 +171,12 @@ const Location = ({ data }: Props) => {
             {getWind(data.list[24].wind.speed)}/
             {getWindDirection(data.list[24].wind.deg)}
           </p>
-          <img
-            src={`https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`}
-            alt={data.list[16].weather[0].description}
+          <Image
+            src={`https://openweathermap.org/img/wn/${data.list[24].weather[0].icon}@2x.png`}
+            alt={data.list[24].weather[0].description}
+            title={data.list[24].weather[0].description}
+            width={100}
+            height={100}
           />
         </div>
         {/* Day 4 32*/}
@@ -174,9 +187,12 @@ const Location = ({ data }: Props) => {
             {getWind(data.list[32].wind.speed)}/
             {getWindDirection(data.list[32].wind.deg)}
           </p>
-          <img
-            src={`https://openweathermap.org/img/wn/${data.list[24].weather[0].icon}@2x.png`}
-            alt={data.list[24].weather[0].description}
+          <Image
+            src={`https://openweathermap.org/img/wn/${data.list[32].weather[0].icon}@2x.png`}
+            alt={data.list[32].weather[0].description}
+            title={data.list[32].weather[0].description}
+            width={100}
+            height={100}
           />
         </div>
         {/* Day 5 */}
@@ -190,6 +206,7 @@ const Location = ({ data }: Props) => {
                     href={`/weather/${location.latitude}/${location.longitude}`}
                   >
                     <li
+                      key={location.name}
                       className={styles["map__marker"]}
                       title={location.name}
                       style={{ top: location.top, left: location.left }}
