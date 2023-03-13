@@ -203,11 +203,11 @@ const Location = ({ data }: Props) => {
               return (
                 <>
                   <Link
+                    key={location.name}
                     scroll={false}
                     href={`/weather/${location.latitude}/${location.longitude}`}
                   >
                     <li
-                      key={location.name}
                       className={styles["map__marker"]}
                       title={location.name}
                       style={{ top: location.top, left: location.left }}
@@ -229,10 +229,12 @@ export default Location;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const key = process.env.DB_KEY;
-  const paths: any = [];
+  const paths = coordinates.map((location) => ({
+    params: { slug: [`${location.latitude}`, `${location.longitude}`] },
+  }));
   return {
     paths,
-    fallback: "blocking",
+    fallback: false,
   };
 };
 
@@ -240,8 +242,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const key = process.env.DB_KEY;
   const { params } = context;
   console.log(params, "params");
-  const lon = params!.params![0];
-  const lat = params!.params![1];
+  console.log(context, "context");
+  const lon = params!.slug![0];
+  const lat = params!.slug![1];
   console.log(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
   );
