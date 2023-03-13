@@ -203,6 +203,7 @@ const Location = ({ data }: Props) => {
               return (
                 <>
                   <Link
+                    scroll={false}
                     href={`/weather/${location.latitude}/${location.longitude}`}
                   >
                     <li
@@ -228,18 +229,6 @@ export default Location;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const key = process.env.DB_KEY;
-
-  // const paths = [
-  //   "keswick",
-  //   "kendal",
-  //   "ennerdale",
-  //   "thirlmere",
-  //   "broughton",
-  //   "windermere",
-  //   "penrith",
-  // ].map((location) => ({
-  //   params: { location: `${location}` },
-  // }));
   const paths: any = [];
   return {
     paths,
