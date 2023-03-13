@@ -15,14 +15,6 @@ const Location = ({ data }: Props) => {
 
   const { temperatureUnit, changeUnit } = useTemperatureUnit();
 
-  const getCelcius = (temp: number) => {
-    return `${Math.round(temp - 273.15)}°C`;
-  };
-
-  const getFahrenheit = (temp: number) => {
-    return `${Math.round(temp * (9 / 5) + 32)}°F`;
-  };
-
   const getTemperature = (temp: number) => {
     if (temperatureUnit === "c") {
       return `${Math.round(temp - 273.15)}°C`;
@@ -35,26 +27,60 @@ const Location = ({ data }: Props) => {
     switch (new Date(date).getDay()) {
       case 0:
         return "Sunday";
-        break;
       case 1:
         return "Monday";
-        break;
       case 2:
         return "Tuesday";
-        break;
       case 3:
         return "Wednesday";
-        break;
       case 4:
         return "Thursday";
-        break;
       case 5:
         return "Friday";
-        break;
       case 6:
         return "Saturday";
+    }
+  };
+
+  const getWind = (speedKmh: number) => {
+    return `${Math.round(speedKmh / 1.609)}mph`;
+  };
+
+  let WIND_DIRECTION;
+  const getWindDirection = (direction: number) => {
+    const x = direction;
+    switch (true) {
+      case x === 0:
+      case x === 360:
+        WIND_DIRECTION = "↑N";
+        break;
+      case x === 90:
+        WIND_DIRECTION = "→E";
+        break;
+      case x === 180:
+        WIND_DIRECTION = "↓S";
+        break;
+      case x === 270:
+        WIND_DIRECTION = "←W";
+        break;
+      case x > 0 && x < 90:
+        WIND_DIRECTION = "↗NE";
+        break;
+      case x > 90 && x < 180:
+        WIND_DIRECTION = "↘SE";
+        break;
+      case x > 180 && x < 270:
+        WIND_DIRECTION = "↙SW";
+        break;
+      case x > 270 && x < 360:
+        WIND_DIRECTION = "↖NW";
+        break;
+      default:
+        WIND_DIRECTION = "-";
         break;
     }
+
+    return WIND_DIRECTION;
   };
   return (
     <div className="body">
@@ -88,36 +114,70 @@ const Location = ({ data }: Props) => {
             </button>
           </span>
         </div>
-        {/* Current weather */}
+        {/* Current weather 0 */}
         <div className={styles["grid__item--1"]}>
           <p>{getDay(data.list[0].dt_txt)}</p>
           <p>{getTemperature(data.list[0].main.temp)}</p>
-          <p>{data.list[0].weather[0].description}</p>
+          <p>
+            {getWind(data.list[0].wind.speed)}/
+            {getWindDirection(data.list[0].wind.deg)}
+          </p>
+          <img
+            src={`https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`}
+            alt={data.list[0].weather[0].description}
+          />
         </div>
-        {/* Day 1 */}
+        {/* Day 1 8 */}
         <div className={styles["grid__item--2"]}>
           <p>{getDay(data.list[8].dt_txt)}</p>
           <p>{getTemperature(data.list[8].main.temp)}</p>
-
-          <p>{data.list[8].weather[0].description}</p>
+          <p>
+            {getWind(data.list[8].wind.speed)}/
+            {getWindDirection(data.list[8].wind.deg)}
+          </p>
+          <img
+            src={`https://openweathermap.org/img/wn/${data.list[8].weather[0].icon}@2x.png`}
+            alt={data.list[8].weather[0].description}
+          />
         </div>
-        {/* Day 2 */}
+        {/* Day 2 16*/}
         <div className={styles["grid__item--3"]}>
           <p>{getDay(data.list[16].dt_txt)}</p>
           <p>{getTemperature(data.list[16].main.temp)}</p>
-          <p>{data.list[16].weather[0].description}</p>
+          <p>
+            {getWind(data.list[16].wind.speed)}/
+            {getWindDirection(data.list[16].wind.deg)}
+          </p>
+          <img
+            src={`https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`}
+            alt={data.list[16].weather[0].description}
+          />
         </div>
-        {/* Day 3 */}
+        {/* Day 3 24 */}
         <div className={styles["grid__item--4"]}>
           <p>{getDay(data.list[24].dt_txt)}</p>
           <p>{getTemperature(data.list[24].main.temp)}</p>
-          <p>{data.list[24].weather[0].description}</p>
+          <p>
+            {getWind(data.list[24].wind.speed)}/
+            {getWindDirection(data.list[24].wind.deg)}
+          </p>
+          <img
+            src={`https://openweathermap.org/img/wn/${data.list[16].weather[0].icon}@2x.png`}
+            alt={data.list[16].weather[0].description}
+          />
         </div>
-        {/* Day 4 */}
+        {/* Day 4 32*/}
         <div className={styles["grid__item--5"]}>
           <p>{getDay(data.list[32].dt_txt)}</p>
           <p>{getTemperature(data.list[32].main.temp)}</p>
-          <p>{data.list[32].weather[0].description}</p>
+          <p>
+            {getWind(data.list[32].wind.speed)}/
+            {getWindDirection(data.list[32].wind.deg)}
+          </p>
+          <img
+            src={`https://openweathermap.org/img/wn/${data.list[24].weather[0].icon}@2x.png`}
+            alt={data.list[24].weather[0].description}
+          />
         </div>
         {/* Day 5 */}
 
