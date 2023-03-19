@@ -29,38 +29,6 @@
   }
 }
 
-.header {
-  grid-area: 1/1/2/3;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: colors.$green-transparent;
-  font-size: 50px;
-  @media (max-width: 768px) {
-    grid-area: 1/1/2/2;
-    margin-left: 1em;
-    margin-right: 1em;
-  }
-}
-.header__button {
-  background-color: colors.$green-transparent;
-  color: white;
-  padding: 15px;
-  border: 5px solid transparent;
-  border-radius: 5px;
-  margin-left: 0.75em;
-  &:hover {
-    background-color: colors.$light-green-transparent;
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-}
-.header__button--active {
-  @extend .header__button;
-  background-color: colors.$light-green-transparent;
-}
-
 .grid__item {
   background: colors.$green-transparent;
   color: white;
@@ -139,6 +107,38 @@
   p {
     width: 6em;
   }
+}
+
+.header {
+  grid-area: 1/1/2/3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: colors.$green-transparent;
+  font-size: 50px;
+  @media (max-width: 768px) {
+    grid-area: 1/1/2/2;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+.header__button {
+  background-color: colors.$green-transparent;
+  color: white;
+  padding: 15px;
+  border: 5px solid transparent;
+  border-radius: 5px;
+  margin-left: 0.75em;
+  &:hover {
+    background-color: colors.$light-green-transparent;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+.header__button--active {
+  @extend .header__button;
+  background-color: colors.$light-green-transparent;
 }
 
 .img {

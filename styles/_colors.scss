@@ -1,3 +1,7 @@
-$light-green-transparent: #1b6c24;
-$green-transparent: #04470c90;
 $green: #04470c;
+
+$light-green: scale-color($green, $lightness: 10%);
+
+$green-transparent: rgba($green, 0.6);
+
+$light-green-transparent: rgba($light-green, 0.6);
